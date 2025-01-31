@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ProductList from './ProductList';
 import axios from 'axios';
 
 
@@ -32,13 +33,7 @@ const Main = () => {
       <h1>Product List</h1>
       <ul>
         {products.map(product => (
-          <li key={product.id}>
-            <h1>{product.id}</h1>
-            <h2>Name: {product.name}</h2>
-            {/* <p>{product.description}</p> */}
-            <p>Price: ${product.price}</p>
-            <p>Quantity: {product.amount}</p>
-          </li>
+          <ProductList product={product}/>
         ))}
       </ul>
     </div>

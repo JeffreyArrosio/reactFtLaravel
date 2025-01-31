@@ -11,8 +11,10 @@ class ProductSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    
     public function run(): void
     {
+        Product::truncate();
         Product::factory(50)->create();
     }
 }

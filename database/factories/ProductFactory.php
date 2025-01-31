@@ -20,6 +20,7 @@ class ProductFactory extends Factory
             'name' => $this->faker->sentence(1),
             'amount' => $this->faker->randomNumber(4),
             'price' => $this->faker->randomFloat(3,1,100),
+            'image' => "https://picsum.photos/id/".$this->faker->randomNumber(3)."/300/300"
         ];
     }
 }
