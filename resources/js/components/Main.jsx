@@ -7,14 +7,20 @@ const Main = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [totalPages, setTotalPages] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+
+
 
   useEffect(() => {
     // Función para obtener los productos desde el endpoint
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('/api/products');
-        setProducts(response.data.data); // Asumiendo que los datos están en response.data.data
+        const response = await axios.get(`/api/products?page=${currentPage}`);
+        setProducts(response.data.data);
+        setTotalPages(response.data.meta.last_page)
         setLoading(false);
+        console.log("hola");
       } catch (err) {
         setError(err.message);
         setLoading(false);
@@ -22,22 +28,13 @@ const Main = () => {
     };
 
     fetchProducts();
-  }, []); // El array vacío como segundo argumento asegura que esto se ejecute solo una vez
+  },[currentPage]); 
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
-
-    <div>
-      <h1>Product List</h1>
-      <ul>
-        {products.map(product => (
-          <ProductList product={product}/>
-        ))}
-      </ul>
-    </div>
-
+    <ProductList products={products} onPageChange={setCurrentPage} currentPage={currentPage} totalPages={totalPages}></ProductList>
   );
 };
 

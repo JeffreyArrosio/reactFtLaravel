@@ -13,8 +13,9 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($products)
+    public function index()
     {
+        $products = Product::paginate(12);
         return ProductResource::collection($products);
     }
 
