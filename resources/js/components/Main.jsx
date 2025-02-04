@@ -17,10 +17,13 @@ const Main = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`/api/products?page=${currentPage}`);
+        if (response.redirected) {
+          window.location.href = response.url;
+          return;
+        }
         setProducts(response.data.data);
         setTotalPages(response.data.meta.last_page)
         setLoading(false);
-        console.log("hola");
       } catch (err) {
         setError(err.message);
         setLoading(false);
@@ -28,7 +31,7 @@ const Main = () => {
     };
 
     fetchProducts();
-  },[currentPage]); 
+  }, [currentPage]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
